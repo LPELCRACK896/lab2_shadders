@@ -7,7 +7,7 @@ def flat(render, **kwargs):
     tA, tB, tC = kwargs["texCoords"]
     triangleNormal = kwargs["triangleNormal"]
 
-    b /= 255
+    b /= 255 
     g /= 255
     r /= 255
 
@@ -254,3 +254,163 @@ def textureBlend(render, **kwargs):
     if r < 0: r = 0
 
     return r, g, b
+
+def grayScale(render, **kwargs):
+    # Normal calculada por vertice
+    u, v, w = kwargs["baryCoords"]
+    b, g, r = kwargs["vColor"]
+    tA, tB, tC = kwargs["texCoords"]
+    nA, nB, nC = kwargs["normals"]
+
+    b /= 255
+    g /= 255
+    r /= 255
+
+    if render.active_texture:
+        # P = Au + Bv + Cw
+        tU = tA[0] * u + tB[0] * v + tC[0] * w
+        tV = tA[1] * u + tB[1] * v + tC[1] * w
+
+        texColor = render.active_texture.getColor(tU, tV)
+
+        b *= texColor[2]
+        g *= texColor[1]
+        r *= texColor[0]
+
+    triangleNormal = np.array([nA[0] * u + nB[0] * v + nC[0] * w,
+                               nA[1] * u + nB[1] * v + nC[1] * w,
+                               nA[2] * u + nB[2] * v + nC[2] * w])
+
+    dirLight = np.array(render.dirLight)
+    intensity = np.dot(triangleNormal, -dirLight)
+
+    b *= intensity
+    g *= intensity
+    r *= intensity
+
+    l = (r+b+g)/3
+    if intensity < 0:
+        return 0, 0, 0
+    else: 
+        return l, l, l 
+
+
+def redScale(render, **kwargs):
+    # Normal calculada por vertice
+    u, v, w = kwargs["baryCoords"]
+    b, g, r = kwargs["vColor"]
+    tA, tB, tC = kwargs["texCoords"]
+    nA, nB, nC = kwargs["normals"]
+
+    b /= 255
+    g /= 255
+    r /= 255
+
+    if render.active_texture:
+        # P = Au + Bv + Cw
+        tU = tA[0] * u + tB[0] * v + tC[0] * w
+        tV = tA[1] * u + tB[1] * v + tC[1] * w
+
+        texColor = render.active_texture.getColor(tU, tV)
+
+        b *= texColor[2]
+        g *= texColor[1]
+        r *= texColor[0]
+
+    triangleNormal = np.array([nA[0] * u + nB[0] * v + nC[0] * w,
+                               nA[1] * u + nB[1] * v + nC[1] * w,
+                               nA[2] * u + nB[2] * v + nC[2] * w])
+
+    dirLight = np.array(render.dirLight)
+    intensity = np.dot(triangleNormal, -dirLight)
+
+    b *= intensity
+    g *= intensity
+    r *= intensity
+
+    l = (r+b+g)/3
+    if intensity < 0:
+        return 0, 0, 0
+    else: 
+        return l, 0, 0 
+
+
+def greenScale(render, **kwargs):
+    # Normal calculada por vertice
+    u, v, w = kwargs["baryCoords"]
+    b, g, r = kwargs["vColor"]
+    tA, tB, tC = kwargs["texCoords"]
+    nA, nB, nC = kwargs["normals"]
+
+    b /= 255
+    g /= 255
+    r /= 255
+
+    if render.active_texture:
+        # P = Au + Bv + Cw
+        tU = tA[0] * u + tB[0] * v + tC[0] * w
+        tV = tA[1] * u + tB[1] * v + tC[1] * w
+
+        texColor = render.active_texture.getColor(tU, tV)
+
+        b *= texColor[2]
+        g *= texColor[1]
+        r *= texColor[0]
+
+    triangleNormal = np.array([nA[0] * u + nB[0] * v + nC[0] * w,
+                               nA[1] * u + nB[1] * v + nC[1] * w,
+                               nA[2] * u + nB[2] * v + nC[2] * w])
+
+    dirLight = np.array(render.dirLight)
+    intensity = np.dot(triangleNormal, -dirLight)
+
+    b *= intensity
+    g *= intensity
+    r *= intensity
+
+    l = (r+b+g)/3
+    if intensity < 0:
+        return 0, 0, 0
+    else: 
+        return 0, l, 0 
+
+
+def blueScale(render, **kwargs):
+    # Normal calculada por vertice
+    u, v, w = kwargs["baryCoords"]
+    b, g, r = kwargs["vColor"]
+    tA, tB, tC = kwargs["texCoords"]
+    nA, nB, nC = kwargs["normals"]
+
+    b /= 255
+    g /= 255
+    r /= 255
+
+    if render.active_texture:
+        # P = Au + Bv + Cw
+        tU = tA[0] * u + tB[0] * v + tC[0] * w
+        tV = tA[1] * u + tB[1] * v + tC[1] * w
+
+        texColor = render.active_texture.getColor(tU, tV)
+
+        b *= texColor[2]
+        g *= texColor[1]
+        r *= texColor[0]
+
+    triangleNormal = np.array([nA[0] * u + nB[0] * v + nC[0] * w,
+                               nA[1] * u + nB[1] * v + nC[1] * w,
+                               nA[2] * u + nB[2] * v + nC[2] * w])
+
+    dirLight = np.array(render.dirLight)
+    intensity = np.dot(triangleNormal, -dirLight)
+
+    b *= intensity
+    g *= intensity
+    r *= intensity
+
+    l = (r+b+g)/3
+
+    if intensity < 0:
+        return 0, 0, 0
+    else: 
+        return 0, 0, l 
