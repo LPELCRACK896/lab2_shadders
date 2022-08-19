@@ -97,7 +97,6 @@ class Renderer(object):
                                     [right[1],up[1],forward[1],camPosition[1]],
                                     [right[2],up[2],forward[2],camPosition[2]],
                                     [0,0,0,1]]
-
         self.viewMatrix = lpm.matriz_inversa(self.camMatrix)
 
     def glProjectionMatrix(self, n = 0.1, f = 1000, fov = 60):

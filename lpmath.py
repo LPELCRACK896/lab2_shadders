@@ -88,7 +88,8 @@ def radians_to_grades(radianes):
     return 180*radianes / pi
 
 def normalizaVector(vector: list):
-    return [a/magnitud_vector(vector) for a in vector]
+    magnitud = magnitud_vector(vector)
+    return [a/magnitud for a in vector]
 
 def productoPunto(vector_1, vector_2):
         if len(vector_1)!=len(vector_2):
